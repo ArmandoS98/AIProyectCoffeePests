@@ -49,13 +49,13 @@ class MainActivity : AppCompatActivity() {
 
         val localModel = LocalModel.Builder().setAssetFilePath("plagas_detector_v1.tflite").build()
 
-        /*   val customObjectDetectorOptions = CustomObjectDetectorOptions.Builder(localModel)
-               .setDetectorMode(CustomObjectDetectorOptions.SINGLE_IMAGE_MODE)
+           val customObjectDetectorOptions = CustomObjectDetectorOptions.Builder(localModel)
+               .setDetectorMode(CustomObjectDetectorOptions.STREAM_MODE)
                .enableClassification()
                .setClassificationConfidenceThreshold(0.5f)
                .setMaxPerObjectLabelCount(3)
-               .build()*/
-
+               .build()
+/*
         val customObjectDetectorOptions =
             CustomObjectDetectorOptions.Builder(localModel)
                 .setDetectorMode(CustomObjectDetectorOptions.SINGLE_IMAGE_MODE)
@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
                 .enableClassification()
                 .setClassificationConfidenceThreshold(0.5f)
                 .setMaxPerObjectLabelCount(1)
-                .build()
+                .build()*/
 
         objectDetector = ObjectDetection.getClient(customObjectDetectorOptions)
     }
@@ -98,9 +98,9 @@ class MainActivity : AppCompatActivity() {
                         for (it in objects) {
                             println("Current - Label: ${it.labels.first().text}, confidence: ${it.labels.first().confidence}")
                             val confidence = if (it.labels.first().confidence > 0.50f) it.labels.firstOrNull()?.text else "Undefined"
-                            if (binding.layout.childCount > 2) binding.layout.removeViewAt(1)
+                            if (binding.layout.childCount > 1) binding.layout.removeViewAt(1)
                             val element = Draw(this, it.boundingBox, confidence!!)
-                            binding.layout.addView(element, 2)
+                            binding.layout.addView(element, 1)
                         }
                         imageProxy.close()
                     }
