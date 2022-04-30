@@ -49,12 +49,12 @@ class MainActivity : AppCompatActivity() {
 
         val localModel = LocalModel.Builder().setAssetFilePath("plagas_detector_v1.tflite").build()
 
-           val customObjectDetectorOptions = CustomObjectDetectorOptions.Builder(localModel)
-               .setDetectorMode(CustomObjectDetectorOptions.STREAM_MODE)
-               .enableClassification()
-               .setClassificationConfidenceThreshold(0.5f)
-               .setMaxPerObjectLabelCount(3)
-               .build()
+        val customObjectDetectorOptions = CustomObjectDetectorOptions.Builder(localModel)
+            .setDetectorMode(CustomObjectDetectorOptions.STREAM_MODE)
+            .enableClassification()
+            .setClassificationConfidenceThreshold(0.5f)
+            .setMaxPerObjectLabelCount(3)
+            .build()
 /*
         val customObjectDetectorOptions =
             CustomObjectDetectorOptions.Builder(localModel)
@@ -96,8 +96,19 @@ class MainActivity : AppCompatActivity() {
                         imageProxy.close()
                     }.addOnSuccessListener { objects ->
                         for (it in objects) {
-                            println("Current - Label: ${it.labels.first().text}, confidence: ${it.labels.first().confidence}")
-                            val confidence = if (it.labels.first().confidence > 0.90f) it.labels.firstOrNull()?.text else "Undefined"
+                            println("Current - Label: ${it.labels.firstOrNull()?.text}, confidence: ${it.labels.firstOrNull()?.confidence}")
+                            val confidence = when {
+                                it.labels.firstOrNull()?.confidence == null -> {
+                                    "Undefined"
+                                }
+                                it.labels.firstOrNull()?.confidence != null -> {
+                                    if (it.labels.firstOrNull()?.confidence!! > 0.59f)
+                                        it.labels.firstOrNull()?.text
+                                    else
+                                        "Undefined"
+                                }
+                                else -> "Undefined"
+                            }
                             if (binding.layout.childCount > 1) binding.layout.removeViewAt(1)
                             val element = Draw(this, it.boundingBox, confidence!!)
                             binding.layout.addView(element, 1)
