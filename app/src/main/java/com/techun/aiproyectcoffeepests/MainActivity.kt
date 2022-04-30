@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity() {
                     }.addOnSuccessListener { objects ->
                         for (it in objects) {
                             println("Current - Label: ${it.labels.first().text}, confidence: ${it.labels.first().confidence}")
-                            val confidence = if (it.labels.first().confidence > 0.50f) it.labels.firstOrNull()?.text else "Undefined"
+                            val confidence = if (it.labels.first().confidence > 0.90f) it.labels.firstOrNull()?.text else "Undefined"
                             if (binding.layout.childCount > 1) binding.layout.removeViewAt(1)
                             val element = Draw(this, it.boundingBox, confidence!!)
                             binding.layout.addView(element, 1)

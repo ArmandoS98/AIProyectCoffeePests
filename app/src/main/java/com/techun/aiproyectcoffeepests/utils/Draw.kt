@@ -23,7 +23,7 @@ class Draw(context: Context?, var react: Rect, var text: String) : View(context)
         paint.style = Paint.Style.STROKE
 
         textPaint = Paint()
-        textPaint.color = Color.YELLOW
+        textPaint.color = Color.WHITE
         textPaint.style = Paint.Style.FILL
         textPaint.textSize = 50f
     }
