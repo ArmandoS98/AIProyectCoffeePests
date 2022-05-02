@@ -7,7 +7,7 @@ This app supports: Live Camera and CameraX enabled live camera.
 ### Live Camera scenario
 It uses the camera preview as input and contains these API workflows: Object detection and tracking:
 * Camera
-    * Preview size - Specify the preview size of rear/front camera manually (Default size is chosen appropriately based on screen size)
+    * Preview size - Specify the preview size of rear camera manually (Default size is chosen appropriately based on screen size)
     * Enable live viewport - Toggle between blocking camera preview by API processing and result rendering or not
 * Object detection / Custom Object Detection
     * Enable multiple objects -- Enable multiple objects to be detected at once
@@ -15,6 +15,7 @@ It uses the camera preview as input and contains these API workflows: Object det
 
 ## Support
 
+* [Machine learning for mobile developers](https://developers.google.com/ml-kit) - ML Kit brings Google’s machine learning expertise to mobile developers in a powerful and easy-to-use package.
 * [Object Detection](https://developers.google.com/ml-kit/vision/object-detection/android) - Detect, track, and classify objects in real time and static images
 * [TensorFlow Lite image classification Android example application](https://github.com/tensorflow/examples/tree/master/lite/examples/image_classification/android) - This is an example application for TensorFlow Lite on Android. It uses Image classification to continuously classify whatever it sees from the device's back camera
 * [Detect and track objects with ML Kit on Android](https://developers.google.com/ml-kit/vision/object-detection/android) - You can use ML Kit to detect and track objects in successive video frames.
