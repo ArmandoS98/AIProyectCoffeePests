@@ -105,6 +105,7 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("UnsafeOptInUsageError")
     private fun bindPreview(cameraProvider: ProcessCameraProvider) {
         val preview: Preview = Preview.Builder().build()
+
         preview.setSurfaceProvider(binding.viewFinder.surfaceProvider)
 
         val cameraSelector: CameraSelector = CameraSelector.Builder()

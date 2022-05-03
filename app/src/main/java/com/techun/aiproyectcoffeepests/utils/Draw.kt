@@ -2,12 +2,11 @@ package com.techun.aiproyectcoffeepests.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.*
-import android.view.MotionEvent
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Rect
 import android.view.View
-import com.google.mlkit.vision.objects.DetectedObject
-import com.techun.aiproyectcoffeepests.R
-import kotlin.math.pow
 
 class Draw(
     context: Context?,
