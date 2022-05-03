@@ -2,21 +2,25 @@ package com.techun.aiproyectcoffeepests
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.graphics.Point
 import android.os.Bundle
 import android.util.Log
 import android.util.Size
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.mlkit.common.model.LocalModel
 import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.objects.DetectedObject
 import com.google.mlkit.vision.objects.ObjectDetection
 import com.google.mlkit.vision.objects.ObjectDetector
 import com.google.mlkit.vision.objects.custom.CustomObjectDetectorOptions
@@ -38,7 +42,46 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main) // data binding
+        if (allPermissionsGranted()) {
+            startCamera()
+        } else {
+            ActivityCompat.requestPermissions(
+                this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
+            )
+        }
+    }
 
+    private fun allPermissionsGranted(): Boolean = REQUIRED_PERMISSIONS.all {
+        ContextCompat.checkSelfPermission(
+            baseContext, it
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_CODE_PERMISSIONS) {
+            if (allPermissionsGranted()) {
+                startCamera()
+            } else {
+                // Exit the app if permission is not granted
+                // Best practice is to explain and offer a chance to re-request but this is out of
+                // scope in this sample. More details:
+                // https://developer.android.com/training/permissions/usage-notes
+                Toast.makeText(
+                    this,
+                    getString(R.string.permission_deny_text),
+                    Toast.LENGTH_SHORT
+                ).show()
+                finish()
+            }
+        }
+    }
+
+    private fun startCamera() {
         cameraProviderFuture = ProcessCameraProvider.getInstance(this)
 
         cameraProviderFuture.addListener({
@@ -55,15 +98,6 @@ class MainActivity : AppCompatActivity() {
             .setClassificationConfidenceThreshold(0.5f)
             .setMaxPerObjectLabelCount(3)
             .build()
-/*
-        val customObjectDetectorOptions =
-            CustomObjectDetectorOptions.Builder(localModel)
-                .setDetectorMode(CustomObjectDetectorOptions.SINGLE_IMAGE_MODE)
-                .enableMultipleObjects()
-                .enableClassification()
-                .setClassificationConfidenceThreshold(0.5f)
-                .setMaxPerObjectLabelCount(1)
-                .build()*/
 
         objectDetector = ObjectDetection.getClient(customObjectDetectorOptions)
     }
@@ -95,6 +129,7 @@ class MainActivity : AppCompatActivity() {
                         Log.e(TAG, "Erroraesc - ${it.message} ")
                         imageProxy.close()
                     }.addOnSuccessListener { objects ->
+                        debugPrint(objects)
                         for (it in objects) {
                             println("Current - Label: ${it.labels.firstOrNull()?.text}, confidence: ${it.labels.firstOrNull()?.confidence}")
                             val confidence = when {
@@ -124,5 +159,18 @@ class MainActivity : AppCompatActivity() {
             imageAnalysis,
             preview
         )
+    }
+
+    private fun debugPrint(detectedObjects: List<DetectedObject>) {
+        detectedObjects.forEachIndexed { index, detectedObject ->
+            val box = detectedObject.boundingBox
+            Log.d(TAG, "Detected object: $index")
+            Log.d(TAG, " trackingId: ${detectedObject.trackingId}")
+            Log.d(TAG, " boundingBox: (${box.left}, ${box.top}) - (${box.right},${box.bottom})")
+            detectedObject.labels.forEach {
+                Log.d(TAG, " categories: ${it.text}")
+                Log.d(TAG, " confidence: ${it.confidence}")
+            }
+        }
     }
 }
