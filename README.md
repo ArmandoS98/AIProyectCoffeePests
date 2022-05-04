@@ -19,7 +19,7 @@ It uses the camera preview as input and contains these API workflows: Object det
 
 ### Visual Search
 
-Please note that the visual search functionality in this app will not work since there is no real search backend setup for this repository. However, it should be easy to hook up your  own search service (e.g. [Product Search](https://cloud.google.com/vision/product-search/docs)) by only replacing the [SearchEngine](https://github.com/googlesamples/mlkit/blob/master/android/material-showcase/app/src/main/java/com/google/mlkit/md/productsearch/SearchEngine.kt) class implementation.
+Please note that the visual search functionality in this app will not work since there is no real search backend setup for this repository.
 
 
 ## Support
