@@ -27,7 +27,7 @@ import com.techun.aiproyectcoffeepests.objectdetection.DetectedObjectInfo
 class SearchedObject(
     resources: Resources,
     private val detectedObject: DetectedObjectInfo,
-    val productList: List<Product>
+    val pestList: List<Pest>
 ) {
 
     private val objectThumbnailCornerRadius: Int =

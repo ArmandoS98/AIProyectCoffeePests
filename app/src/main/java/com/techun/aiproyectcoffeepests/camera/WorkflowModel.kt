@@ -22,7 +22,7 @@ import androidx.annotation.MainThread
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.techun.aiproyectcoffeepests.objectdetection.DetectedObjectInfo
-import com.techun.aiproyectcoffeepests.pestsearch.Product
+import com.techun.aiproyectcoffeepests.pestsearch.Pest
 import com.techun.aiproyectcoffeepests.pestsearch.SearchedObject
 import com.techun.aiproyectcoffeepests.settings.PreferenceUtils
 
@@ -111,7 +111,7 @@ class WorkflowModel(application: Application) : AndroidViewModel(application) {
         isCameraLive = false
     }
 
-    fun onSearchCompleted(detectedObject: DetectedObjectInfo, products: List<Product>) {
+    fun onSearchCompleted(detectedObject: DetectedObjectInfo, pests: List<Pest>) {
         val lConfirmedObject = confirmedObject
         if (detectedObject != lConfirmedObject) {
             // Drops the search result from the object that has lost focus.
@@ -121,6 +121,6 @@ class WorkflowModel(application: Application) : AndroidViewModel(application) {
         objectIdsToSearch.remove(detectedObject.objectId)
         setWorkflowState(WorkflowState.SEARCHED)
 
-        searchedObject.value = SearchedObject(context.resources, lConfirmedObject, products)
+        searchedObject.value = SearchedObject(context.resources, lConfirmedObject, pests)
     }
 }

@@ -13,13 +13,10 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.chip.Chip
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.common.base.Objects
-import com.google.common.collect.ImmutableList
 import com.techun.aiproyectcoffeepests.camera.CameraSource
 import com.techun.aiproyectcoffeepests.camera.CameraSourcePreview
 import com.techun.aiproyectcoffeepests.camera.GraphicOverlay
@@ -28,8 +25,7 @@ import com.techun.aiproyectcoffeepests.camera.WorkflowModel.WorkflowState
 import com.techun.aiproyectcoffeepests.objectdetection.MultiObjectProcessor
 import com.techun.aiproyectcoffeepests.objectdetection.ProminentObjectProcessor
 import com.techun.aiproyectcoffeepests.pestsearch.BottomSheetScrimView
-import com.techun.aiproyectcoffeepests.pestsearch.Product
-import com.techun.aiproyectcoffeepests.pestsearch.ProductAdapter
+import com.techun.aiproyectcoffeepests.pestsearch.Pest
 import com.techun.aiproyectcoffeepests.settings.PreferenceUtils
 import java.io.IOException
 
@@ -48,7 +44,6 @@ class LiveObjectDetectionActivity : AppCompatActivity(), View.OnClickListener {
 
     private var bottomSheetBehavior: BottomSheetBehavior<View>? = null
     private var bottomSheetScrimView: BottomSheetScrimView? = null
-    private var productRecyclerView: RecyclerView? = null
     private var bottomSheetTitleView: TextView? = null
     private var bottomSheetTitlePest: TextView? = null
     private var bottomSheetDescriptionsPest: TextView? = null
@@ -248,11 +243,6 @@ class LiveObjectDetectionActivity : AppCompatActivity(), View.OnClickListener {
         bottomSheetImagePest = findViewById(R.id.imageView)
         bottomSheetDescriptionsPest = findViewById(R.id.tvDescriptions)
         bottomSheetScientificNamePest = findViewById(R.id.tvScientificName)
-        productRecyclerView = findViewById<RecyclerView>(R.id.product_recycler_view).apply {
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(this@LiveObjectDetectionActivity)
-            adapter = ProductAdapter(ImmutableList.of())
-        }
     }
 
     private fun setUpWorkflowModel() {
@@ -281,7 +271,7 @@ class LiveObjectDetectionActivity : AppCompatActivity(), View.OnClickListener {
             // Observes changes on the object to search, if happens, show detected object labels as
             // product search results.
             objectToSearch.observe(this@LiveObjectDetectionActivity) { detectObject ->
-                val productList: List<Product> = detectObject.labels.map { label ->
+                val pestList: List<Pest> = detectObject.labels.map { label ->
                     val information = when (label.text) {
                         "Antracnosis" -> {
                             getString(R.string.msg_antracnosis)
@@ -325,20 +315,20 @@ class LiveObjectDetectionActivity : AppCompatActivity(), View.OnClickListener {
                             R.drawable.roya
                         }
                     }
-                    Product(
+                    Pest(
                         label.text,
                         scientificName,
                         information,
                         imgPreview/* *//* imageUrl *//*, label.text, "${label.confidence}" *//* subtitle */
                     )
                 }
-                workflowModel?.onSearchCompleted(detectObject, productList)
+                workflowModel?.onSearchCompleted(detectObject, pestList)
             }
 
             // Observes changes on the object that has search completed, if happens, show the bottom sheet
             // to present search result.
             searchedObject.observe(this@LiveObjectDetectionActivity) { searchedObject ->
-                val productList = searchedObject.productList
+                val productList = searchedObject.pestList
 
                 objectThumbnailForBottomSheet = searchedObject.getObjectThumbnail()
                 bottomSheetTitleView?.text = resources.getQuantityString(
@@ -350,11 +340,8 @@ class LiveObjectDetectionActivity : AppCompatActivity(), View.OnClickListener {
                 bottomSheetImagePest?.setImageResource(productList.firstOrNull()?.imageUrl ?: R.drawable.tfl2_logo) //Load ImagePreview
                 bottomSheetDescriptionsPest?.text = (productList.firstOrNull()?.description ?: "n/a") //Load Description
                 bottomSheetScientificNamePest?.text = (productList.firstOrNull()?.subtitle ?: "n/a") //Load Scientific Name
-                /*getString(R.string.buttom_sheet_custom_model_title)*/
-//                productRecyclerView?.adapter = ProductAdapter(searchedObject.productList)
                 slidingSheetUpFromHiddenState = true
-                bottomSheetBehavior?.peekHeight =
-                    preview?.height?.div(2) ?: BottomSheetBehavior.PEEK_HEIGHT_AUTO
+                bottomSheetBehavior?.peekHeight = preview?.height?.div(2) ?: BottomSheetBehavior.PEEK_HEIGHT_AUTO
                 bottomSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
             }
         }
@@ -447,7 +434,7 @@ class LiveObjectDetectionActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     companion object {
-        private const val TAG = "CustomModelODActivity"
+        private const val TAG = "LiveObjectDetection"
         private const val CUSTOM_MODEL_PATH = "plagas_detector_v1.tflite"
     }
 }
