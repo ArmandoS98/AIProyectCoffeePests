@@ -1,5 +1,7 @@
 # Coffee Pests Sample App
 
+![CoffeePests](https://raw.githubusercontent.com/ArmandoS98/AIProyectCoffeePests/develop/Screenshots/banner.png)
+
 ## How to use the app
 This app supports: Live Camera and CameraX enabled live camera.
 
