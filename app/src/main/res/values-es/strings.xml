@@ -52,7 +52,7 @@
         <item quantity="other">%d coincidencias encontradas</item>
     </plurals>
     <string name="about_us">Acerca de</string>
-    <string name="app_version">1.0.0</string>
+    <string name="app_version">1.0.1</string>
     <string name="integrants">Armando Santos\nKevin Posadas\nMaria Rene\nAdler Ramos</string>
     <string name="develop_by">Desarrollada por:</string>
     <string name="info_app">Esta aplicación fue desarrollada para el curso de Inteligencia Artificial de la universidad Da Vinci De Guatemala.</string>

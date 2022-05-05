@@ -51,7 +51,7 @@
         <item quantity="other">%d matches found</item>
     </plurals>
     <string name="about_us">About us</string>
-    <string name="app_version">1.0.0</string>
+    <string name="app_version">1.0.1</string>
     <string name="integrants">Armando Santos\nKevin Posadas\nMaria Rene\nAdler Ramos</string>
     <string name="develop_by">Developed by:</string>
     <string name="info_app">This application was developed for the Artificial Intelligence course of the Da Vinci University of Guatemala.</string>
