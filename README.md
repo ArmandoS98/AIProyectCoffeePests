@@ -1,7 +1,6 @@
 # Coffee Pests Sample App
 
 ## How to use the app
-
 This app supports: Live Camera and CameraX enabled live camera.
 
 ### Live Camera scenario
@@ -18,12 +17,12 @@ It uses the camera preview as input and contains these API workflows: Object det
   - Confirmation time in auto search -- Required time that an auto-detected object needs to be in focus before it is confirmed.
 
 ### Visual Search
-
 Please note that the visual search functionality in this app will not work since there is no real search backend setup for this repository.
 
+## Test the app
+Download it from [here](https://github.com/ArmandoS98/AIProyectCoffeePests/raw/develop/app/release/ai-coffeepestsV1_0_1.apk)
 
 ## Support
-
 * [Machine learning for mobile developers](https://developers.google.com/ml-kit) - ML Kit brings Google’s machine learning expertise to mobile developers in a powerful and easy-to-use package.
 * [Object Detection](https://developers.google.com/ml-kit/vision/object-detection/android) - Detect, track, and classify objects in real time and static images
 * [TensorFlow Lite image classification Android example application](https://github.com/tensorflow/examples/tree/master/lite/examples/image_classification/android) - This is an example application for TensorFlow Lite on Android. It uses Image classification to continuously classify whatever it sees from the device's back camera
