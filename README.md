@@ -1,4 +1,4 @@
-# Coffee Pests Sample App
+# Coffee Pests App
 
 ![CoffeePests](https://raw.githubusercontent.com/ArmandoS98/AIProyectCoffeePests/develop/Screenshots/banner.png)
 
