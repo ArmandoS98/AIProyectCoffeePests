@@ -1,5 +1,6 @@
 package com.techun.aiproyectcoffeepests.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -7,7 +8,11 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.view.View
 
-class Draw(context: Context?, var react: Rect, var text: String) : View(context) {
+class Draw(
+    context: Context?,
+    var react: Rect,
+    var text: String
+) : View(context) {
 
     lateinit var paint: Paint
     lateinit var textPaint: Paint

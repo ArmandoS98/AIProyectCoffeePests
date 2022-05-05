@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AI-CoffeePests</string>
+    <string name="permission_deny_text">Es necesario aceptar los permisos. Saliendo.</string>
+    <string name="tensorflow_lite_logo_description">TensorFlow Lite logo</string>
+
+    <!-- Strings for object detection settings. -->
+    <string name="pref_category_object_detection">Detección de objetos</string>
+    <string name="pref_key_object_detector_enable_multiple_objects" translatable="false">odemo</string>
+    <string name="pref_key_object_detector_enable_classification" translatable="false">odec</string>
+
+    <!-- Strings for product search settings. -->
+    <string name="pref_category_product_search">Busqueda de Plagas</string>
+    <string name="pref_key_enable_auto_search" translatable="false">pkeas</string>
+    <string name="pref_title_enable_auto_search">Busqueda automatica</string>
+    <string name="pref_key_confirmation_time_in_manual_search" translatable="false">ctims</string>
+    <string name="pref_title_confirmation_time_in_manual_search">Tiempo de confirmación en la búsqueda manual</string>
+    <string name="pref_summary_confirmation_time_in_manual_search">Rango de 100ms a 1000ms</string>
+    <string name="pref_key_confirmation_time_in_auto_search" translatable="false">ctias</string>
+    <string name="pref_title_confirmation_time_in_auto_search">Tiempo de confirmación en la búsqueda automática</string>
+    <string name="pref_summary_confirmation_time_in_auto_search">Rango de 500ms a 2000ms</string>
+
+    <!-- Strings for camera settings. -->
+    <string name="pref_category_camera">Camara</string>
+    <string name="pref_key_rear_camera_preview_size" translatable="false">rcpvs</string>
+    <string name="pref_key_rear_camera_picture_size" translatable="false">rcpts</string>
+    <string name="pref_title_rear_camera_preview_size">Tamaño de la vista previa de la cámara trasera</string>
+
+    <string name="product_search_button">Buscando objecto</string>
+
+    <string name="buttom_sheet_custom_model_title">Objeto personalizado encontrado</string>
+    <string name="static_image_prompt_detected_no_results">No se ha encontrado ningún resultado</string>
+    <string name="static_image_prompt_detected_results">Pulse sobre un punto para inspeccionar</string>
+    <string name="static_image_card_no_result_title">No se ha encontrado ningún resultado</string>
+    <string name="static_image_card_no_result_subtitle">Support text place holder</string>
+    <string name="static_image_preview_card_subtitle">+%d resultados más</string>
+
+    <string name="cd_settings_button">Ajustes</string>
+    <string name="cd_close_button">Atras</string>
+    <string name="cd_flash_button">Activar el flash de la cámara</string>
+    <string name="cd_photo_library_button">Subir imagen</string>
+    <string name="prompt_point_at_an_object">Apunta la cámara a un objeto</string>
+    <string name="prompt_point_at_a_bird">Apunta tu cámara a una planta de café</string>
+    <string name="prompt_hold_camera_steady">Mantener la cámara quieta por un momento</string>
+    <string name="prompt_move_camera_closer">Acercarse a la búsqueda</string>
+    <string name="prompt_searching">Buscando&#8230;</string>
+    <string name="msg_roya">La enfermedad se manifiesta como un polvillo naranja similar al óxido en la parte inferior de las hojas del café. Es una condición cíclica que provoca la defoliación, al igual que los minadores de la hoja. El viento y la lluvia propagan las esporas de la roya, que se desarrolla muy bien a 70ºF/21ºC aproximadamente. Así que, la enfermedad es más frecuente en la Arabica que se cultiva en las condiciones cálidas y húmedas de alturas bajas</string>
+    <string name="msg_antracnosis">La antracnosis es una de las enfermedades más severas que afectan a los cultivos de café y es considerada un problema fitosanitario de importancia económica debido a las pérdidas que puede causar en la producción total de una finca. A menudo, puede confundirse con la enfermedad de las cerezas del cafeto, ya que los síntomas son similares.\n\nAdemás, la antracnosis puede disminuir notablemente las ganancias de los caficultores al producir sabores fenólicos, lo cual se considera un defecto y disminuye el puntaje de taza. Está vinculada con la roya, y el efecto de ambas enfermedades combinadas puede ser devastador.</string>
+    <string name="msg_ojo_de_gallo">El ojo de gallo se observa como una mancha redonda hundida y de diferente tamaño, tomando un color amarillento al inicio del ataque. Al inicio, estas manchas son de color café oscuro y luego, cuando han alcanzado su madurez, son de color gris blanquecino.</string>
+    <plurals name="bottom_sheet_title">
+        <item quantity="one">%d coincidencia encontrada</item>
+        <item quantity="other">%d coincidencias encontradas</item>
+    </plurals>
+    <string name="about_us">Acerca de</string>
+    <string name="app_version">1.0.1</string>
+    <string name="integrants">Armando Santos\nKevin Posadas\nMaria Rene\nAdler Ramos</string>
+    <string name="develop_by">Desarrollada por:</string>
+    <string name="info_app">Esta aplicación fue desarrollada para el curso de Inteligencia Artificial de la universidad Da Vinci De Guatemala.</string>
+
+</resources>
