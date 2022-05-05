@@ -6,15 +6,13 @@
 This app supports: Live Camera and CameraX enabled live camera.
 
 ### Live Camera scenario
-It uses the camera preview as input and contains these API workflows: Object detection,visual search and tracking:
+It uses the camera preview as an input, it contains the following API workflows: Object detection,visual search and tracking:
 * Camera
-    * Preview size - Specify the preview size of rear camera manually (Default size is chosen appropriately based on screen size)
     * Enable live viewport - Toggle between blocking camera preview by API processing and result rendering or not
 * Object detection / Custom Object Detection
-    * Enable multiple objects -- Enable multiple objects to be detected at once
     * Enable classification -- Enable classification for each detected object
 - Pests search
-  - Enable auto search -- If enabled, search request will be fired automatically once object is detected and confirmed, otherwise a search button will appear to trigger search manually
+  - Enable auto search -- If enabled, search request will be fired automatically once the object is detected and confirmed. Otherwise, a search button will appear to trigger a manual search.
   - Confirmation time in manual search -- Required time that an manually-detected object needs to be in focus before it is confirmed.
   - Confirmation time in auto search -- Required time that an auto-detected object needs to be in focus before it is confirmed.
 
