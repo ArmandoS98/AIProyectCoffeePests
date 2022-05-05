@@ -20,7 +20,7 @@
         android:id="@+id/settings_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_toStartOf="@id/about_button"
         android:contentDescription="@string/cd_settings_button"
         android:padding="@dimen/top_action_button_padding"
         app:srcCompat="@drawable/ic_settings_vd_white_24" />
@@ -34,4 +34,12 @@
         android:padding="@dimen/top_action_button_padding"
         app:srcCompat="@drawable/camera_flash" />
 
+    <ImageView
+        android:id="@+id/about_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@string/cd_settings_button"
+        android:padding="@dimen/top_action_button_padding"
+        app:srcCompat="@drawable/ic_info_24" />
 </RelativeLayout>

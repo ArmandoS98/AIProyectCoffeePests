@@ -1,4 +1,4 @@
-package com.techun.aiproyectcoffeepests
+package com.techun.aiproyectcoffeepests.view
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -24,6 +24,7 @@ import com.google.mlkit.vision.objects.DetectedObject
 import com.google.mlkit.vision.objects.ObjectDetection
 import com.google.mlkit.vision.objects.ObjectDetector
 import com.google.mlkit.vision.objects.custom.CustomObjectDetectorOptions
+import com.techun.aiproyectcoffeepests.R
 import com.techun.aiproyectcoffeepests.databinding.ActivityMainBinding
 import com.techun.aiproyectcoffeepests.utils.Draw
 

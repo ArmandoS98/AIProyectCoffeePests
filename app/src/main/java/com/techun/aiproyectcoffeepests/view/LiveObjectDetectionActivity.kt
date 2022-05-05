@@ -1,7 +1,8 @@
-package com.techun.aiproyectcoffeepests
+package com.techun.aiproyectcoffeepests.view
 
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.hardware.Camera
@@ -17,16 +18,20 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.chip.Chip
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.common.base.Objects
+import com.techun.aiproyectcoffeepests.R
 import com.techun.aiproyectcoffeepests.camera.CameraSource
 import com.techun.aiproyectcoffeepests.camera.CameraSourcePreview
 import com.techun.aiproyectcoffeepests.camera.GraphicOverlay
 import com.techun.aiproyectcoffeepests.camera.WorkflowModel
 import com.techun.aiproyectcoffeepests.camera.WorkflowModel.WorkflowState
+import com.techun.aiproyectcoffeepests.extensions.goToActivity
 import com.techun.aiproyectcoffeepests.objectdetection.MultiObjectProcessor
 import com.techun.aiproyectcoffeepests.objectdetection.ProminentObjectProcessor
 import com.techun.aiproyectcoffeepests.pestsearch.BottomSheetScrimView
 import com.techun.aiproyectcoffeepests.pestsearch.Pest
+import com.techun.aiproyectcoffeepests.settings.AboutActivity
 import com.techun.aiproyectcoffeepests.settings.PreferenceUtils
+import com.techun.aiproyectcoffeepests.settings.SettingsActivity
 import java.io.IOException
 
 class LiveObjectDetectionActivity : AppCompatActivity(), View.OnClickListener {
@@ -34,6 +39,7 @@ class LiveObjectDetectionActivity : AppCompatActivity(), View.OnClickListener {
     private var preview: CameraSourcePreview? = null
     private var graphicOverlay: GraphicOverlay? = null
     private var settingsButton: View? = null
+    private var aboutButton: View? = null
     private var flashButton: View? = null
     private var promptChip: Chip? = null
     private var promptChipAnimator: AnimatorSet? = null
@@ -56,31 +62,28 @@ class LiveObjectDetectionActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_live_object_detection)
 
-
         preview = findViewById(R.id.camera_preview)
         graphicOverlay = findViewById<GraphicOverlay>(R.id.camera_preview_graphic_overlay).apply {
             setOnClickListener(this@LiveObjectDetectionActivity)
             cameraSource = CameraSource(this)
         }
         promptChip = findViewById(R.id.bottom_prompt_chip)
-        promptChipAnimator =
-            (AnimatorInflater.loadAnimator(
-                this,
-                R.animator.bottom_prompt_chip_enter
-            ) as AnimatorSet).apply {
-                setTarget(promptChip)
-            }
+        promptChipAnimator = (AnimatorInflater.loadAnimator(
+            this,
+            R.animator.bottom_prompt_chip_enter
+        ) as AnimatorSet).apply {
+            setTarget(promptChip)
+        }
         searchButton =
             findViewById<ExtendedFloatingActionButton>(R.id.product_search_button).apply {
                 setOnClickListener(this@LiveObjectDetectionActivity)
             }
-        searchButtonAnimator =
-            (AnimatorInflater.loadAnimator(
-                this,
-                R.animator.search_button_enter
-            ) as AnimatorSet).apply {
-                setTarget(searchButton)
-            }
+        searchButtonAnimator = (AnimatorInflater.loadAnimator(
+            this,
+            R.animator.search_button_enter
+        ) as AnimatorSet).apply {
+            setTarget(searchButton)
+        }
         setUpBottomSheet()
         findViewById<View>(R.id.close_button).setOnClickListener(this)
         flashButton = findViewById<View>(R.id.flash_button).apply {
@@ -89,14 +92,18 @@ class LiveObjectDetectionActivity : AppCompatActivity(), View.OnClickListener {
         settingsButton = findViewById<View>(R.id.settings_button).apply {
             setOnClickListener(this@LiveObjectDetectionActivity)
         }
+
+        aboutButton = findViewById<View>(R.id.about_button).apply {
+            setOnClickListener(this@LiveObjectDetectionActivity)
+        }
         setUpWorkflowModel()
     }
 
     override fun onResume() {
         super.onResume()
-
         workflowModel?.markCameraFrozen()
         settingsButton?.isEnabled = true
+        aboutButton?.isEnabled = true
         bottomSheetBehavior?.state = BottomSheetBehavior.STATE_HIDDEN
         currentWorkflowState = WorkflowState.NOT_STARTED
         cameraSource?.setFrameProcessor(
@@ -154,7 +161,11 @@ class LiveObjectDetectionActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.settings_button -> {
                 settingsButton?.isEnabled = false
-//                startActivity(Intent(this, SettingsActivity::class.java))
+                startActivity(Intent(this, SettingsActivity::class.java))
+            }
+            R.id.about_button -> {
+                aboutButton?.isEnabled = false
+                startActivity(Intent(this, AboutActivity::class.java))
             }
         }
     }
@@ -337,11 +348,16 @@ class LiveObjectDetectionActivity : AppCompatActivity(), View.OnClickListener {
                     productList.size
                 )
                 bottomSheetTitlePest?.text = productList.firstOrNull()?.title ?: "n/a" //Load Title
-                bottomSheetImagePest?.setImageResource(productList.firstOrNull()?.imageUrl ?: R.drawable.tfl2_logo) //Load ImagePreview
-                bottomSheetDescriptionsPest?.text = (productList.firstOrNull()?.description ?: "n/a") //Load Description
-                bottomSheetScientificNamePest?.text = (productList.firstOrNull()?.subtitle ?: "n/a") //Load Scientific Name
+                bottomSheetImagePest?.setImageResource(
+                    productList.firstOrNull()?.imageUrl ?: R.drawable.tfl2_logo
+                ) //Load ImagePreview
+                bottomSheetDescriptionsPest?.text =
+                    (productList.firstOrNull()?.description ?: "n/a") //Load Description
+                bottomSheetScientificNamePest?.text =
+                    (productList.firstOrNull()?.subtitle ?: "n/a") //Load Scientific Name
                 slidingSheetUpFromHiddenState = true
-                bottomSheetBehavior?.peekHeight = preview?.height?.div(2) ?: BottomSheetBehavior.PEEK_HEIGHT_AUTO
+                bottomSheetBehavior?.peekHeight =
+                    preview?.height?.div(2) ?: BottomSheetBehavior.PEEK_HEIGHT_AUTO
                 bottomSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
             }
         }

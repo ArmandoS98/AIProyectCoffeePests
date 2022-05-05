@@ -3,7 +3,9 @@
     package="com.techun.aiproyectcoffeepests">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-feature android:name="android.hardware.camera.any" />
+
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -14,8 +16,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AIProyectCoffeePests">
         <activity
-            android:name=".LiveObjectDetectionActivity"
-            android:exported="true">
+            android:name=".settings.AboutActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.SplashActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,10 +31,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
-            android:exported="false">
-
-        </activity>
+            android:name=".settings.SettingsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.LiveObjectDetectionActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.MainActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
