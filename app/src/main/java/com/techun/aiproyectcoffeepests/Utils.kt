@@ -50,7 +50,7 @@ object Utils {
 
     private const val TAG = "Utils"
 
-    internal fun requestRuntimePermissions(activity: Activity) {
+  /*  internal fun requestRuntimePermissions(activity: Activity) {
 
         val allNeededPermissions = getRequiredPermissions(activity).filter {
             checkSelfPermission(activity, it) != PackageManager.PERMISSION_GRANTED
@@ -58,7 +58,7 @@ object Utils {
 
         if (allNeededPermissions.isNotEmpty()) {
             ActivityCompat.requestPermissions(
-                activity, allNeededPermissions.toTypedArray(), /* requestCode= */ 0
+                activity, allNeededPermissions.toTypedArray(), *//* requestCode= *//* 0
             )
         }
     }
@@ -77,7 +77,7 @@ object Utils {
             arrayOf()
         }
     }
-
+*/
     fun isPortraitMode(context: Context): Boolean =
         context.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
 

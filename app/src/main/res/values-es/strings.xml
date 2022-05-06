@@ -56,5 +56,8 @@
     <string name="integrants">Armando Santos\nKevin Posadas\nMaria Rene\nAdler Ramos</string>
     <string name="develop_by">Desarrollada por:</string>
     <string name="info_app">Esta aplicación fue desarrollada para el curso de Inteligencia Artificial de la universidad Da Vinci De Guatemala.</string>
-
+    <string name="onboarding_protect">Protege</string>
+    <string name="onboarding_tip_one">Cuida y protege tu cultivo para cosechar con éxito, sin ser un experto en jardinería</string>
+    <string name="onboarding_analyze">Analiza</string>
+    <string name="onboarding_tip_two">Con el uso de la Inteligencia Artificial va a ser fundamental para tomar decisiones con un alto porcentaje de eficacia para alcanzar una meta optima.</string>
 </resources>

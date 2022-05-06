@@ -16,6 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AIProyectCoffeePests">
         <activity
+            android:name=".view.onboarding.OnBoardingActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".settings.AboutActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
