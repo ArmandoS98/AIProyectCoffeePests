@@ -1,8 +1,10 @@
 package com.techun.aiproyectcoffeepests.view
 
+import android.Manifest
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.hardware.Camera
@@ -11,7 +13,10 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -19,6 +24,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.common.base.Objects
 import com.techun.aiproyectcoffeepests.R
+import com.techun.aiproyectcoffeepests.Utils
 import com.techun.aiproyectcoffeepests.camera.CameraSource
 import com.techun.aiproyectcoffeepests.camera.CameraSourcePreview
 import com.techun.aiproyectcoffeepests.camera.GraphicOverlay
@@ -33,6 +39,9 @@ import com.techun.aiproyectcoffeepests.settings.AboutActivity
 import com.techun.aiproyectcoffeepests.settings.PreferenceUtils
 import com.techun.aiproyectcoffeepests.settings.SettingsActivity
 import java.io.IOException
+
+private const val REQUEST_CODE_PERMISSIONS = 999 // Return code after asking for permission
+private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA) // permission needed
 
 class LiveObjectDetectionActivity : AppCompatActivity(), View.OnClickListener {
     private var cameraSource: CameraSource? = null
@@ -61,19 +70,11 @@ class LiveObjectDetectionActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_live_object_detection)
-
-        preview = findViewById(R.id.camera_preview)
-        graphicOverlay = findViewById<GraphicOverlay>(R.id.camera_preview_graphic_overlay).apply {
-            setOnClickListener(this@LiveObjectDetectionActivity)
-            cameraSource = CameraSource(this)
-        }
         promptChip = findViewById(R.id.bottom_prompt_chip)
         promptChipAnimator = (AnimatorInflater.loadAnimator(
             this,
             R.animator.bottom_prompt_chip_enter
-        ) as AnimatorSet).apply {
-            setTarget(promptChip)
-        }
+        ) as AnimatorSet).apply { setTarget(promptChip) }
         searchButton =
             findViewById<ExtendedFloatingActionButton>(R.id.product_search_button).apply {
                 setOnClickListener(this@LiveObjectDetectionActivity)
@@ -81,11 +82,10 @@ class LiveObjectDetectionActivity : AppCompatActivity(), View.OnClickListener {
         searchButtonAnimator = (AnimatorInflater.loadAnimator(
             this,
             R.animator.search_button_enter
-        ) as AnimatorSet).apply {
-            setTarget(searchButton)
-        }
+        ) as AnimatorSet).apply { setTarget(searchButton) }
         setUpBottomSheet()
         findViewById<View>(R.id.close_button).setOnClickListener(this)
+
         flashButton = findViewById<View>(R.id.flash_button).apply {
             setOnClickListener(this@LiveObjectDetectionActivity)
         }
@@ -96,7 +96,43 @@ class LiveObjectDetectionActivity : AppCompatActivity(), View.OnClickListener {
         aboutButton = findViewById<View>(R.id.about_button).apply {
             setOnClickListener(this@LiveObjectDetectionActivity)
         }
+        if (allPermissionsGranted()) {
+            initCameraComponents()
+        } else {
+            ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
+        }
+    }
+
+    private fun initCameraComponents() {
+        preview = findViewById(R.id.camera_preview)
+        graphicOverlay = findViewById<GraphicOverlay>(R.id.camera_preview_graphic_overlay).apply {
+            setOnClickListener(this@LiveObjectDetectionActivity)
+            cameraSource = CameraSource(this)
+        }
         setUpWorkflowModel()
+    }
+
+    private fun allPermissionsGranted(): Boolean = REQUIRED_PERMISSIONS.all {
+        ContextCompat.checkSelfPermission(
+            baseContext, it
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_CODE_PERMISSIONS) {
+            if (allPermissionsGranted()) {
+                initCameraComponents()
+            } else {
+                Toast.makeText(this, getString(R.string.permission_deny_text), Toast.LENGTH_SHORT)
+                    .show()
+                finish()
+            }
+        }
     }
 
     override fun onResume() {

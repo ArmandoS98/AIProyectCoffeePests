@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudioProjects/AIProyectCoffeePests/app/src/main/res/drawable/bg_gradient.xml" value="0.247" />
         <entry key="..\:/AndroidStudioProjects/AIProyectCoffeePests/app/src/main/res/drawable/camera_flash.xml" value="0.3135" />
         <entry key="..\:/AndroidStudioProjects/AIProyectCoffeePests/app/src/main/res/drawable/ic_close_vd_white_24.xml" value="0.3135" />
         <entry key="..\:/AndroidStudioProjects/AIProyectCoffeePests/app/src/main/res/drawable/ic_flash_off_vd_white_24.xml" value="0.3135" />
@@ -13,11 +14,16 @@
         <entry key="..\:/AndroidStudioProjects/AIProyectCoffeePests/app/src/main/res/layout/activity_about.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidStudioProjects/AIProyectCoffeePests/app/src/main/res/layout/activity_live_object_detection.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidStudioProjects/AIProyectCoffeePests/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/AndroidStudioProjects/AIProyectCoffeePests/app/src/main/res/layout/activity_on_boarding.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidStudioProjects/AIProyectCoffeePests/app/src/main/res/layout/activity_settings.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidStudioProjects/AIProyectCoffeePests/app/src/main/res/layout/activity_test.xml" value="0.358695652173913" />
+        <entry key="..\:/AndroidStudioProjects/AIProyectCoffeePests/app/src/main/res/layout/board_item.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidStudioProjects/AIProyectCoffeePests/app/src/main/res/layout/camera_preview_overlay.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidStudioProjects/AIProyectCoffeePests/app/src/main/res/layout/fragment_about.xml" value="0.33" />
+        <entry key="..\:/AndroidStudioProjects/AIProyectCoffeePests/app/src/main/res/layout/fragment_first.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidStudioProjects/AIProyectCoffeePests/app/src/main/res/layout/fragment_second.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidStudioProjects/AIProyectCoffeePests/app/src/main/res/layout/fragment_settings.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidStudioProjects/AIProyectCoffeePests/app/src/main/res/layout/fragment_view_pager.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidStudioProjects/AIProyectCoffeePests/app/src/main/res/layout/product_bottom_sheet.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidStudioProjects/AIProyectCoffeePests/app/src/main/res/layout/product_item.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidStudioProjects/AIProyectCoffeePests/app/src/main/res/layout/products_preview_card.xml" value="0.36666666666666664" />
