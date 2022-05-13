@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.hardware.Camera
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -24,13 +25,11 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.common.base.Objects
 import com.techun.aiproyectcoffeepests.R
-import com.techun.aiproyectcoffeepests.Utils
 import com.techun.aiproyectcoffeepests.camera.CameraSource
 import com.techun.aiproyectcoffeepests.camera.CameraSourcePreview
 import com.techun.aiproyectcoffeepests.camera.GraphicOverlay
 import com.techun.aiproyectcoffeepests.camera.WorkflowModel
 import com.techun.aiproyectcoffeepests.camera.WorkflowModel.WorkflowState
-import com.techun.aiproyectcoffeepests.extensions.goToActivity
 import com.techun.aiproyectcoffeepests.objectdetection.MultiObjectProcessor
 import com.techun.aiproyectcoffeepests.objectdetection.ProminentObjectProcessor
 import com.techun.aiproyectcoffeepests.pestsearch.BottomSheetScrimView
@@ -62,6 +61,8 @@ class LiveObjectDetectionActivity : AppCompatActivity(), View.OnClickListener {
     private var bottomSheetTitleView: TextView? = null
     private var bottomSheetTitlePest: TextView? = null
     private var bottomSheetDescriptionsPest: TextView? = null
+    private var bottomSheetTemperaturePest: TextView? = null
+    private var bottomSheetSeeMore: TextView? = null
     private var bottomSheetScientificNamePest: TextView? = null
     private var bottomSheetImagePest: ImageView? = null
     private var objectThumbnailForBottomSheet: Bitmap? = null
@@ -289,7 +290,9 @@ class LiveObjectDetectionActivity : AppCompatActivity(), View.OnClickListener {
         bottomSheetTitlePest = findViewById(R.id.tvTitle)
         bottomSheetImagePest = findViewById(R.id.imageView)
         bottomSheetDescriptionsPest = findViewById(R.id.tvDescriptions)
+        bottomSheetTemperaturePest = findViewById(R.id.tvTemperature)
         bottomSheetScientificNamePest = findViewById(R.id.tvScientificName)
+        bottomSheetSeeMore = findViewById(R.id.tvSeeMore)
     }
 
     private fun setUpWorkflowModel() {
@@ -298,11 +301,7 @@ class LiveObjectDetectionActivity : AppCompatActivity(), View.OnClickListener {
             // Observes the workflow state changes, if happens, update the overlay view indicators and
             // camera preview state.
             workflowState.observe(this@LiveObjectDetectionActivity, Observer { workflowState ->
-                if (workflowState == null || Objects.equal(
-                        currentWorkflowState,
-                        workflowState
-                    )
-                ) {
+                if (workflowState == null || Objects.equal(currentWorkflowState, workflowState)) {
                     return@Observer
                 }
                 currentWorkflowState = workflowState
@@ -320,13 +319,13 @@ class LiveObjectDetectionActivity : AppCompatActivity(), View.OnClickListener {
             objectToSearch.observe(this@LiveObjectDetectionActivity) { detectObject ->
                 val pestList: List<Pest> = detectObject.labels.map { label ->
                     val information = when (label.text) {
-                        "Antracnosis" -> {
+                        getString(R.string.id_antracnosis) -> {
                             getString(R.string.msg_antracnosis)
                         }
-                        "Ojo de gallo" -> {
+                        getString(R.string.id_ojo_de_gallo) -> {
                             getString(R.string.msg_ojo_de_gallo)
                         }
-                        "Roya" -> {
+                        getString(R.string.id_roya) -> {
                             getString(R.string.msg_roya)
                         }
                         else -> {
@@ -334,40 +333,62 @@ class LiveObjectDetectionActivity : AppCompatActivity(), View.OnClickListener {
                         }
                     }
                     val scientificName = when (label.text) {
-                        "Antracnosis" -> {
-                            "Colletotrichum coffeanum"
+                        getString(R.string.id_antracnosis) -> {
+                            getString(R.string.scientific_name_antracnosis)
                         }
-                        "Ojo de gallo" -> {
-                            "Mycena citricolor"
+                        getString(R.string.id_ojo_de_gallo) -> {
+                            getString(R.string.scientific_name_ojo_de_gallo)
                         }
-                        "Roya" -> {
-                            "Hemileia vastatrix"
+                        getString(R.string.id_roya) -> {
+                            getString(R.string.scientific_name_roya)
                         }
                         else -> {
-                            "Hemileia vastatrix"
+                            getString(R.string.scientific_name_roya)
                         }
                     }
-
                     val imgPreview = when (label.text) {
-                        "Antracnosis" -> {
+                        getString(R.string.id_antracnosis) -> {
                             R.drawable.antraconosis
                         }
-                        "Ojo de gallo" -> {
+                        getString(R.string.id_ojo_de_gallo) -> {
                             R.drawable.ojo_de_gallo
                         }
-                        "Roya" -> {
+                        getString(R.string.id_roya) -> {
                             R.drawable.roya
                         }
                         else -> {
                             R.drawable.roya
                         }
                     }
-                    Pest(
-                        label.text,
-                        scientificName,
-                        information,
-                        imgPreview/* *//* imageUrl *//*, label.text, "${label.confidence}" *//* subtitle */
-                    )
+                    val temperature = when (label.text) {
+                        getString(R.string.id_antracnosis) -> {
+                            getString(R.string.temperature_antracnosis)
+                        }
+                        getString(R.string.id_ojo_de_gallo) -> {
+                            getString(R.string.temperature_ojo_de_gallo)
+                        }
+                        getString(R.string.id_roya) -> {
+                            getString(R.string.temperature_roya)
+                        }
+                        else -> {
+                            getString(R.string.temperature_roya)
+                        }
+                    }
+                    val moreInformation = when (label.text) {
+                        getString(R.string.id_antracnosis) -> {
+                            "http://royacafe.lanref.org.mx/Documentos/FTNo42Colletotrichumkahawae.pdf"
+                        }
+                        getString(R.string.id_ojo_de_gallo) -> {
+                            "http://royacafe.lanref.org.mx/Documentos/FTNo49Mycenacitricolor.pdf"
+                        }
+                        getString(R.string.id_roya) -> {
+                            "https://prod.senasica.gob.mx/SIRVEF/ContenidoPublico/Roya%20cafeto/Fichas%20tecnicas/Ficha%20T%C3%A9cnica%20de%20Roya%20del%20cafeto.pdf"
+                        }
+                        else -> {
+                            "https://prod.senasica.gob.mx/SIRVEF/ContenidoPublico/Roya%20cafeto/Fichas%20tecnicas/Ficha%20T%C3%A9cnica%20de%20Roya%20del%20cafeto.pdf"
+                        }
+                    }
+                    Pest(label.text, scientificName, information, imgPreview, temperature,moreInformation)
                 }
                 workflowModel?.onSearchCompleted(detectObject, pestList)
             }
@@ -383,20 +404,25 @@ class LiveObjectDetectionActivity : AppCompatActivity(), View.OnClickListener {
                     productList.size,
                     productList.size
                 )
-                bottomSheetTitlePest?.text = productList.firstOrNull()?.title ?: "n/a" //Load Title
-                bottomSheetImagePest?.setImageResource(
-                    productList.firstOrNull()?.imageUrl ?: R.drawable.tfl2_logo
-                ) //Load ImagePreview
-                bottomSheetDescriptionsPest?.text =
-                    (productList.firstOrNull()?.description ?: "n/a") //Load Description
-                bottomSheetScientificNamePest?.text =
-                    (productList.firstOrNull()?.subtitle ?: "n/a") //Load Scientific Name
+                bottomSheetTitlePest?.text = productList.firstOrNull()?.title ?: getString(R.string.msg_default) //Load Title
+                bottomSheetImagePest?.setImageResource(productList.firstOrNull()?.imageUrl ?: R.drawable.tfl2_logo) //Load ImagePreview
+                bottomSheetDescriptionsPest?.text = (productList.firstOrNull()?.description ?: getString(R.string.msg_default)) //Load Description
+                bottomSheetScientificNamePest?.text = (productList.firstOrNull()?.subtitle ?: getString(R.string.msg_default)) //Load Scientific Name
+                bottomSheetTemperaturePest?.text = (productList.firstOrNull()?.temperature ?: getString(R.string.msg_default)) //Load Scientific Name
+                bottomSheetSeeMore?.setOnClickListener {
+                    openBrowser(productList.firstOrNull()?.urlInformation ?: getString(R.string.msg_default))
+                }
                 slidingSheetUpFromHiddenState = true
-                bottomSheetBehavior?.peekHeight =
-                    preview?.height?.div(2) ?: BottomSheetBehavior.PEEK_HEIGHT_AUTO
+                bottomSheetBehavior?.peekHeight = preview?.height?.div(2) ?: BottomSheetBehavior.PEEK_HEIGHT_AUTO
                 bottomSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
             }
         }
+    }
+
+    private fun openBrowser(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
     }
 
     private fun stateChangeInAutoSearchMode(workflowState: WorkflowState) {
