@@ -6,7 +6,7 @@
 This app supports: Live Camera and CameraX enabled live camera.
 
 ## Documentation
-See the documentation [here](https://armandos98.github.io/ProyectoCoffeeDocumentationWebPage/)
+See the documentation [here](https://TechUn-GT.github.io/ProyectoCoffeeDocumentationWebPage/)
 
 ### Live Camera scenario
 It uses the camera preview as an input, it contains the following API workflows: Object detection,visual search and tracking:
